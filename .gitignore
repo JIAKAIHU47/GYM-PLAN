@@ -1,0 +1,6 @@
+# 生成中间产物
+src/out/
+build/out/
+*.log
+.DS_Store
+~$*
