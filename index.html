@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0e1116">
+<title>QB 训练卡</title>
+<style>
+:root{--bg:#0e1116;--card:#171c23;--card2:#1d242d;--line:#2a333f;--tx:#e9eef4;--dim:#8b98a6;--am:#ffb02e;--rd:#ff5c47;--gn:#3ec98a;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 -apple-system,"PingFang SC","Hiragino Sans GB",sans-serif;padding-bottom:40px;}
+h1{font-size:15px;margin:0;letter-spacing:.5px;color:var(--tx);font-weight:800;}
+.top{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;border-bottom:1px solid var(--line);}
+.top .sub{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.5;}
+.top .sub b{color:var(--am);}
+nav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:rgba(14,17,22,.97);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+nav a{flex:0 0 auto;background:var(--card);border:1px solid var(--line);color:var(--tx);text-decoration:none;font-size:13px;font-weight:700;padding:9px 13px;border-radius:10px;}
+nav a.on{background:var(--am);border-color:var(--am);color:#161a1f;}
+nav a.sf{border-color:#4a2a26;color:#ff8f7d;}
+.week{display:flex;gap:6px;padding:10px 12px 4px;overflow-x:auto;scrollbar-width:none;}
+.week::-webkit-scrollbar{display:none;}
+.wd{flex:0 0 auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:5px 9px;font-size:11px;color:var(--dim);line-height:1.35;}
+.wd b{display:block;color:var(--am);font-size:13px;}
+.wd.off b{color:#5c6874;}
+main{padding:6px 12px 0;}
+section{scroll-margin-top:58px;padding-bottom:18px;}
+.daytop{display:flex;gap:12px;align-items:flex-start;padding:16px 2px 10px;border-bottom:2px solid var(--am);margin-bottom:12px;}
+.code{flex:0 0 auto;font-size:22px;font-weight:800;color:var(--am);line-height:1.1;min-width:44px;}
+h2{font-size:17px;margin:0;line-height:1.3;font-weight:800;}
+.meta{font-size:11.5px;color:var(--dim);margin-top:5px;}
+.tag{background:#233040;color:#9fb3c6;padding:1px 6px;border-radius:8px;font-size:10.5px;margin-right:3px;}
+.note{margin:0 0 12px;font-size:13px;color:var(--dim);background:var(--card);border:1px solid var(--line);border-left:3px solid var(--am);border-radius:10px;padding:10px 12px;}
+.blk{margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.blkhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:11px 13px;background:var(--card2);font-size:13.5px;font-weight:800;color:var(--am);border-bottom:1px solid var(--line);}
+.blkhead em{font-style:normal;font-size:11.5px;color:var(--dim);font-weight:400;flex:0 0 auto;}
+.item{display:flex;gap:10px;padding:12px 13px;border-bottom:1px solid var(--line);align-items:flex-start;cursor:pointer;}
+.item:last-of-type{border-bottom:none;}
+.item input{flex:0 0 auto;width:26px;height:26px;margin:1px 0 0;accent-color:#3ec98a;}
+.body{flex:1;min-width:0;}
+.nm{font-size:16px;font-weight:700;line-height:1.35;margin-bottom:7px;}
+.ps{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px;}
+.p{display:inline-block;background:#2b3644;color:#cfe0ef;font-size:13px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap;}
+.p i{font-style:normal;color:#7d8fa1;font-weight:800;font-size:10.5px;margin-right:5px;letter-spacing:.5px;}
+.cue{font-size:13px;color:#a9b6c4;line-height:1.5;}
+.cue b{color:var(--am);font-weight:800;font-size:11.5px;background:#2b3644;padding:1px 6px;border-radius:5px;margin-right:5px;}
+.alt{font-size:11.5px;color:#6f7d8b;margin-top:5px;}
+.item input:checked ~ .body{opacity:.4;}
+.item input:checked ~ .body .nm{text-decoration:line-through;}
+.srow{padding:11px 13px;border-bottom:1px solid var(--line);}
+.srow:last-child{border-bottom:none;}
+.sa{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:4px;line-height:1.4;}
+.sa.red{color:var(--rd);}
+.sb{font-size:13px;color:var(--dim);line-height:1.55;}
+footer{font-size:12px;color:#5c6874;padding:14px 16px 30px;line-height:1.7;border-top:1px solid var(--line);margin-top:8px;}
+footer b{color:#8b98a6;}
+/* —— JS 增强部分：默认隐藏，脚本可用时才出现 —— */
+#topen{position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:40;background:var(--am);color:#161a1f;border:none;font:800 15px/1 inherit;padding:14px 16px;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.45);}
+#topen,#timer,#prog{display:none;}
+body.js #topen{display:block;}
+body.js #prog{display:flex;}
+body.js #timer.ready{display:none;}
+body.js #timer.ready.open{display:block;}
+#prog{position:fixed;left:0;right:0;bottom:0;z-index:39;background:rgba(23,28,35,.97);border-top:1px solid var(--line);padding:8px 14px calc(env(safe-area-inset-bottom) + 8px);align-items:center;gap:10px;font-size:12px;color:var(--dim);}
+.track{flex:1;height:6px;background:#2a333f;border-radius:3px;overflow:hidden;}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--am),#ff7a2e);transition:width .25s;}
+#pnum{color:var(--am);font-weight:800;font-size:13px;}
+#timer{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#0b0e12;border-top:2px solid var(--am);padding:18px 16px calc(env(safe-area-inset-bottom) + 16px);text-align:center;}
+#tt{font:800 58px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-2px;margin-bottom:14px;}
+#tt.warn{color:var(--rd);}
+#tt.done{color:var(--gn);}
+.tbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.tbtns button{background:var(--card2);border:1px solid var(--line);color:var(--tx);font:700 15px/1 inherit;padding:14px 15px;border-radius:12px;min-width:62px;font-family:inherit;}
+.tbtns button.pri{background:var(--am);color:#161a1f;border-color:var(--am);}
+</style></head><body>
+
+<div class="top">
+  <h1>QB 训练卡 <span style="color:#5c6874;font-weight:600;font-size:12px">· v1.0</span></h1>
+  <div class="sub">点一下动作就打勾 ｜ 参数四档全列出，<b>只读你当前分期那一档</b>（B1=W1-4，B2=W5-8，B3=W9-12，B4=W13-16）</div>
+</div>
+
+<nav>
+<a href="#d1">D1</a>
+<a href="#d2">D2</a>
+<a href="#d3">D3</a>
+<a href="#d4">D4</a>
+<a href="#d5">D5</a>
+<a href="#safety" class="sf">安全</a>
+<a href="#test">测试</a>
+</nav>
+<div class="week">
+<div class="wd"><b>一</b><span>D1</span></div><div class="wd"><b>二</b><span>D2</span></div><div class="wd off"><b>三</b><span>休息</span></div><div class="wd"><b>四</b><span>D3</span></div><div class="wd off"><b>五</b><span>休息</span></div><div class="wd"><b>六</b><span>D4</span></div><div class="wd"><b>日</b><span>D5</span></div>
+</div>
+
+<main>
+<section id="d1">
+<div class="daytop">
+  <div class="code">D1</div>
+  <div>
+    <h2>下肢 A ｜ 单腿力量 + 抗旋转核心</h2>
+    <div class="meta">⏱ 75 分钟 ｜ <span class="tag">单腿</span><span class="tag">髋主导</span><span class="tag">抗旋转</span></div>
+  </div>
+</div>
+
+<div class="blk">
+<div class="blkhead"><span>① 热身与激活</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b0i0" data-k="d1b0i0">
+<div class="body">
+<div class="nm">90/90 呼吸（脚踩墙）</div>
+<div class="ps"><span class="p"><i>B1</i>2×5 呼吸</span><span class="p"><i>B2</i>2×5</span><span class="p"><i>B3</i>2×5</span><span class="p"><i>B4</i>2×5</span></div>
+<div class="cue"><b>吸 4s / 呼 8s</b>先建立腹内压，这是全天的开关。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b0i1" data-k="d1b0i1">
+<div class="body">
+<div class="nm">猫牛 + 四足胸椎旋转</div>
+<div class="ps"><span class="p"><i>B1</i>2×6/侧</span><span class="p"><i>B2</i>2×6/侧</span><span class="p"><i>B3</i>2×6/侧</span><span class="p"><i>B4</i>2×6/侧</span></div>
+<div class="cue"><b>慢</b>腰椎只做小幅度；旋转主要发生在胸椎。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b0i2" data-k="d1b0i2">
+<div class="body">
+<div class="nm">弹力带侧向走</div>
+<div class="ps"><span class="p"><i>B1</i>2×10步/向</span><span class="p"><i>B2</i>2×12步</span><span class="p"><i>B3</i>2×12步</span><span class="p"><i>B4</i>2×12步</span></div>
+<div class="cue"><b>控制</b>臀中肌唤醒，膝盖不内扣。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b0i3" data-k="d1b0i3">
+<div class="body">
+<div class="nm">单腿臀桥</div>
+<div class="ps"><span class="p"><i>B1</i>2×8/侧</span><span class="p"><i>B2</i>2×10/侧</span><span class="p"><i>B3</i>2×10/侧</span><span class="p"><i>B4</i>2×10/侧</span></div>
+<div class="cue"><b>2-1-2</b>先把臀叫醒，再上重量。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b0i4" data-k="d1b0i4">
+<div class="body">
+<div class="nm">髋屈肌 + 踝背屈拉伸</div>
+<div class="ps"><span class="p"><i>B1</i>2×30s/侧</span><span class="p"><i>B2</i>2×30s</span><span class="p"><i>B3</i>2×30s</span><span class="p"><i>B4</i>2×30s</span></div>
+<div class="cue"><b>静态</b>上游松了，腰就不用替它加班。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>② 功率激活（快！不累）</span><em>6 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b1i0" data-k="d1b1i0">
+<div class="body">
+<div class="nm">药球旋转抛（对墙/侧站）</div>
+<div class="ps"><span class="p"><i>B1</i>3kg 3×3/侧</span><span class="p"><i>B2</i>4kg 4×3/侧</span><span class="p"><i>B3</i>5kg 5×3/侧</span><span class="p"><i>B4</i>5-6kg 4×3/侧</span></div>
+<div class="cue"><b>全力速度</b>每一次都要「最快」，不是「最重」。速度一下降就结束这一组。</div>
+<div class="alt">替代：无墙可用：地雷管单臂快速推 3×5/侧</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b1i1" data-k="d1b1i1">
+<div class="body">
+<div class="nm">低箱跳（W9 后加入）</div>
+<div class="ps"><span class="p"><i>B1</i>—</span><span class="p"><i>B2</i>—</span><span class="p"><i>B3</i>4×3（30cm）</span><span class="p"><i>B4</i>4×3</span></div>
+<div class="cue"><b>落地无声</b>落地要「像猫」，膝盖软、躯干不前倾；腰一塌立刻停。</div>
+<div class="alt">替代：退阶：快速提踵跳 3×8</div>
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>③ 主力量 · 单腿</span><em>22 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b2i0" data-k="d1b2i0">
+<div class="body">
+<div class="nm">保加利亚分腿蹲（对侧手持哑铃/壶铃）</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/腿 RPE6-7</span><span class="p"><i>B2</i>4×8/腿 RPE7-8</span><span class="p"><i>B3</i>4×6/腿 RPE8</span><span class="p"><i>B4</i>3×6/腿 RPE7</span></div>
+<div class="cue"><b>3-1-2</b>躯干略前倾但背平；后腿只是辅助，70% 力量在前腿。</div>
+<div class="alt">替代：退阶：扶架分腿蹲 / 台阶上步（低箱）</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b2i1" data-k="d1b2i1">
+<div class="body">
+<div class="nm">单腿 RDL（壶铃/哑铃）</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/腿</span><span class="p"><i>B2</i>3×8-10/腿</span><span class="p"><i>B3</i>3×8/腿（离心 3s）</span><span class="p"><i>B4</i>3×8/腿</span></div>
+<div class="cue"><b>3-1-1</b>髋向后推、背平、骨盆不开口；感觉在大腿后侧而不是腰。</div>
+<div class="alt">替代：退阶：手扶架单腿 RDL / 双腿 RDL（轻）</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b2i2" data-k="d1b2i2">
+<div class="body">
+<div class="nm">单腿髋推 / 单腿臀桥（负重）</div>
+<div class="ps"><span class="p"><i>B1</i>2×10/腿</span><span class="p"><i>B2</i>3×10/腿</span><span class="p"><i>B3</i>3×10/腿</span><span class="p"><i>B4</i>2×10/腿</span></div>
+<div class="cue"><b>2-1-2</b>肋骨下压，臀发力到顶，不靠腰顶。</div>
+<div class="alt">替代：器械臀推（双脚）也可</div>
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>④ 辅助 · 单侧孤立</span><em>10 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b3i0" data-k="d1b3i0">
+<div class="body">
+<div class="nm">单腿腿屈伸（器械）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/腿</span><span class="p"><i>B2</i>3×12/腿</span><span class="p"><i>B3</i>3×10/腿</span><span class="p"><i>B4</i>3×12/腿</span></div>
+<div class="cue"><b>2-1-2</b>固定轨迹、零腰椎压缩，可放心做；每 2 周 +1-2 次或 +1 片。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b3i1" data-k="d1b3i1">
+<div class="body">
+<div class="nm">单腿腿弯举（器械）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/腿</span><span class="p"><i>B2</i>3×12/腿</span><span class="p"><i>B3</i>3×10/腿</span><span class="p"><i>B4</i>3×12/腿</span></div>
+<div class="cue"><b>3-1-2</b>离心慢放，保护膝盖也保护腰。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b3i2" data-k="d1b3i2">
+<div class="body">
+<div class="nm">单腿提踵（站姿）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/腿</span><span class="p"><i>B2</i>3×15/腿</span><span class="p"><i>B3</i>3×12/腿</span><span class="p"><i>B4</i>3×15/腿</span></div>
+<div class="cue"><b>2-2-2</b>踝的刚性＝地面反作用力的第一站。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑤ 核心（抗伸展 + 抗旋转 + 抗侧屈）</span><em>18 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b4i0" data-k="d1b4i0">
+<div class="body">
+<div class="nm">负重死虫</div>
+<div class="ps"><span class="p"><i>B1</i>3×6/侧</span><span class="p"><i>B2</i>3×8/侧</span><span class="p"><i>B3</i>3×8/侧（+2kg）</span><span class="p"><i>B4</i>3×8/侧</span></div>
+<div class="cue"><b>3-2-3</b>腰贴地是唯一标准；一旦离地就减幅度。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b4i1" data-k="d1b4i1">
+<div class="body">
+<div class="nm">半跪 Pallof 等长 Hold</div>
+<div class="ps"><span class="p"><i>B1</i>3×20s/侧</span><span class="p"><i>B2</i>3×25s/侧</span><span class="p"><i>B3</i>3×25s/侧</span><span class="p"><i>B4</i>3×20s/侧</span></div>
+<div class="cue"><b>等长</b>抵抗旋转，不是「顶回去」；肋骨下沉、不憋气。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b4i2" data-k="d1b4i2">
+<div class="body">
+<div class="nm">手提箱行走（单侧壶铃）</div>
+<div class="ps"><span class="p"><i>B1</i>3×30m/侧 16kg</span><span class="p"><i>B2</i>3×30m/侧 20kg</span><span class="p"><i>B3</i>3×30m/侧 24kg</span><span class="p"><i>B4</i>3×30m/侧 24kg</span></div>
+<div class="cue"><b>稳步</b>肩膀水平、身体不歪；这一步是术后最该练的「负重核心」。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b4i3" data-k="d1b4i3">
+<div class="body">
+<div class="nm">鸟狗（停 3 秒）</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/侧</span><span class="p"><i>B2</i>3×8/侧</span><span class="p"><i>B3</i>3×8/侧</span><span class="p"><i>B4</i>3×8/侧</span></div>
+<div class="cue"><b>停 3s</b>手腿伸出时腰不转、骨盆不晃。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑥ 收尾</span><em>5 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d1b5i0" data-k="d1b5i0">
+<div class="body">
+<div class="nm">雪橇推（躯干直立、中轻）</div>
+<div class="ps"><span class="p"><i>B1</i>3×15m</span><span class="p"><i>B2</i>4×15m</span><span class="p"><i>B3</i>4×15m</span><span class="p"><i>B4</i>3×15m</span></div>
+<div class="cue"><b>持续</b>身体前倾 15-20° 蹬地，不塌腰；这是最安全的下肢功率动作。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d1b5i1" data-k="d1b5i1">
+<div class="body">
+<div class="nm">髋屈肌 + 胸小肌拉伸</div>
+<div class="ps"><span class="p"><i>B1</i>2×30s/侧</span><span class="p"><i>B2</i>2×30s</span><span class="p"><i>B3</i>2×30s</span><span class="p"><i>B4</i>2×30s</span></div>
+<div class="cue"><b>静态</b>收尾必须做，别跳过。</div>
+
+</div>
+</label>
+</div>
+</section>
+<section id="d2">
+<div class="daytop">
+  <div class="code">D2</div>
+  <div>
+    <h2>上肢 A ｜ 水平推拉 + 抗伸展核心</h2>
+    <div class="meta">⏱ 72 分钟 ｜ <span class="tag">水平推</span><span class="tag">水平拉</span><span class="tag">抗伸展</span><span class="tag">肩袖</span></div>
+  </div>
+</div>
+
+<div class="blk">
+<div class="blkhead"><span>① 热身与激活</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b0i0" data-k="d2b0i0">
+<div class="body">
+<div class="nm">90/90 呼吸</div>
+<div class="ps"><span class="p"><i>B1</i>2×5 呼吸</span><span class="p"><i>B2</i>2×5</span><span class="p"><i>B3</i>2×5</span><span class="p"><i>B4</i>2×5</span></div>
+<div class="cue"><b>慢</b>开练前先把腹部「打开」。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b0i1" data-k="d2b0i1">
+<div class="body">
+<div class="nm">弹力带 W + Y + 外旋</div>
+<div class="ps"><span class="p"><i>B1</i>2×12 各</span><span class="p"><i>B2</i>2×12</span><span class="p"><i>B3</i>2×12</span><span class="p"><i>B4</i>2×12</span></div>
+<div class="cue"><b>慢</b>肩袖与下斜方＝传球的稳定器。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b0i2" data-k="d2b0i2">
+<div class="body">
+<div class="nm">肩胛俯卧撑 + 墙面滑行</div>
+<div class="ps"><span class="p"><i>B1</i>2×12 / 2×10</span><span class="p"><i>B2</i>2×12 / 2×10</span><span class="p"><i>B3</i>2×12 / 2×10</span><span class="p"><i>B4</i>2×12 / 2×10</span></div>
+<div class="cue"><b>控制</b>前锯肌和肩胛上回旋，减少肩前部代偿。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b0i3" data-k="d2b0i3">
+<div class="body">
+<div class="nm">胸椎泡沫轴伸展</div>
+<div class="ps"><span class="p"><i>B1</i>2×10</span><span class="p"><i>B2</i>2×10</span><span class="p"><i>B3</i>2×10</span><span class="p"><i>B4</i>2×10</span></div>
+<div class="cue"><b>慢</b>先把胸椎打开，卧推才不会用腰顶。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>② 上肢功率</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b1i0" data-k="d2b1i0">
+<div class="body">
+<div class="nm">药球胸前推（对墙，站姿/半跪）</div>
+<div class="ps"><span class="p"><i>B1</i>2-3kg 4×5</span><span class="p"><i>B2</i>4kg 5×4</span><span class="p"><i>B3</i>5kg 5×3</span><span class="p"><i>B4</i>4-5kg 4×3</span></div>
+<div class="cue"><b>全力速度</b>像传球一样「由髋带胸」；球离手要快，接球用深蹲缓冲。</div>
+<div class="alt">替代：无墙：弹力带快速推 3×8（快速回位）</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b1i1" data-k="d2b1i1">
+<div class="body">
+<div class="nm">爆发俯卧撑（手离地）W9 后</div>
+<div class="ps"><span class="p"><i>B1</i>—</span><span class="p"><i>B2</i>—</span><span class="p"><i>B3</i>3×5</span><span class="p"><i>B4</i>3×5</span></div>
+<div class="cue"><b>快速</b>腰不塌、落地即刻收；肩或腰不适立即退回普通俯卧撑。</div>
+<div class="alt">替代：退阶：上斜快速俯卧撑 3×6</div>
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>③ 主力量 · 水平推拉</span><em>22 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b2i0" data-k="d2b2i0">
+<div class="body">
+<div class="nm">哑铃卧推（中立握，凳上）</div>
+<div class="ps"><span class="p"><i>B1</i>3×10</span><span class="p"><i>B2</i>4×8-10 RPE7</span><span class="p"><i>B3</i>4×6-8 RPE8</span><span class="p"><i>B4</i>3×6-8</span></div>
+<div class="cue"><b>3-1-2</b>肩胛后收下沉、脚踩实；推起时呼气不憋。</div>
+<div class="alt">替代：地板卧推（限制肩伸展，对术后更稳）</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b2i1" data-k="d2b2i1">
+<div class="body">
+<div class="nm">单臂哑铃划船（三点支撑）</div>
+<div class="ps"><span class="p"><i>B1</i>4×10/侧</span><span class="p"><i>B2</i>4×10/侧</span><span class="p"><i>B3</i>4×8/侧</span><span class="p"><i>B4</i>4×8/侧</span></div>
+<div class="cue"><b>2-1-2</b>既是力量也是抗旋转；骨盆别随手臂转。</div>
+<div class="alt">替代：胸支撑器械划船</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b2i2" data-k="d2b2i2">
+<div class="body">
+<div class="nm">半跪地雷管推 / 单臂上斜推</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/侧</span><span class="p"><i>B2</i>3×8/侧</span><span class="p"><i>B3</i>3×8/侧</span><span class="p"><i>B4</i>3×6/侧</span></div>
+<div class="cue"><b>2-1-2</b>半跪姿＝天然的髋-核心整合；杠铃轨迹自然，对腰椎友好。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>④ 辅助 · 肩与背</span><em>12 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b3i0" data-k="d2b3i0">
+<div class="body">
+<div class="nm">面拉 Face Pull</div>
+<div class="ps"><span class="p"><i>B1</i>3×15</span><span class="p"><i>B2</i>3×15</span><span class="p"><i>B3</i>3×15</span><span class="p"><i>B4</i>3×15</span></div>
+<div class="cue"><b>2-1-2</b>拉到额头高度、肘高于腕；这是「投掷者的保险」。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b3i1" data-k="d2b3i1">
+<div class="body">
+<div class="nm">侧卧/绳索肩外旋</div>
+<div class="ps"><span class="p"><i>B1</i>3×15</span><span class="p"><i>B2</i>3×15</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×15</span></div>
+<div class="cue"><b>3-1-2</b>轻重量、全程慢；肩袖练的是耐力不是重量。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b3i2" data-k="d2b3i2">
+<div class="body">
+<div class="nm">直臂下压 / 仰卧上拉（背阔）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12</span><span class="p"><i>B2</i>3×12</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×12</span></div>
+<div class="cue"><b>2-1-2</b>背阔＝投掷的鞭甩加速器。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b3i3" data-k="d2b3i3">
+<div class="body">
+<div class="nm">俯卧 Y 字（下斜方）</div>
+<div class="ps"><span class="p"><i>B1</i>3×10</span><span class="p"><i>B2</i>3×10-12</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×12</span></div>
+<div class="cue"><b>停 1s</b>小重量即可；肩胛稳定决定传球精度。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑤ 核心（抗伸展为主 + 抗旋转）</span><em>16 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b4i0" data-k="d2b4i0">
+<div class="body">
+<div class="nm">半跪腹轮 / 杠铃滚出</div>
+<div class="ps"><span class="p"><i>B1</i>3×6</span><span class="p"><i>B2</i>3×8</span><span class="p"><i>B3</i>3×8</span><span class="p"><i>B4</i>3×8</span></div>
+<div class="cue"><b>3-1-3</b>限制幅度到「腰要塌之前」；半跪比站立安全得多。</div>
+<div class="alt">替代：退阶：死虫加长杠杆 3×8/侧</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b4i1" data-k="d2b4i1">
+<div class="body">
+<div class="nm">半跪 Cable Chop（慢）</div>
+<div class="ps"><span class="p"><i>B1</i>3×10/侧</span><span class="p"><i>B2</i>3×10/侧</span><span class="p"><i>B3</i>3×10/侧</span><span class="p"><i>B4</i>3×10/侧</span></div>
+<div class="cue"><b>3-1-2</b>发力来自髋与胸椎；腰椎始终朝前。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b4i2" data-k="d2b4i2">
+<div class="body">
+<div class="nm">侧板 + 上举腿</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/侧</span><span class="p"><i>B2</i>3×10/侧</span><span class="p"><i>B3</i>3×10/侧</span><span class="p"><i>B4</i>3×8/侧</span></div>
+<div class="cue"><b>控制</b>髋顶高、身体一条线；宁可缩短杠杆。</div>
+<div class="alt">替代：退阶：屈膝侧板 3×20s</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b4i3" data-k="d2b4i3">
+<div class="body">
+<div class="nm">90/90 呼吸（收尾重置）</div>
+<div class="ps"><span class="p"><i>B1</i>2×5 呼吸</span><span class="p"><i>B2</i>2×5</span><span class="p"><i>B3</i>2×5</span><span class="p"><i>B4</i>2×5</span></div>
+<div class="cue"><b>慢</b>训练结束前把肋骨放下来、恢复中立位。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑥ 收尾</span><em>5 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d2b5i0" data-k="d2b5i0">
+<div class="body">
+<div class="nm">农夫行走（双侧负重、直立）</div>
+<div class="ps"><span class="p"><i>B1</i>3×30m</span><span class="p"><i>B2</i>3×30m</span><span class="p"><i>B3</i>3×30m</span><span class="p"><i>B4</i>3×30m</span></div>
+<div class="cue"><b>稳步</b>负重 2×体重 30-40%；挺胸、别塌肩。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d2b5i1" data-k="d2b5i1">
+<div class="body">
+<div class="nm">胸小肌 / 胸椎拉伸</div>
+<div class="ps"><span class="p"><i>B1</i>2×30s</span><span class="p"><i>B2</i>2×30s</span><span class="p"><i>B3</i>2×30s</span><span class="p"><i>B4</i>2×30s</span></div>
+<div class="cue"><b>静态</b>把胸口打开，减少腰椎代偿。</div>
+
+</div>
+</label>
+</div>
+</section>
+<section id="d3">
+<div class="daytop">
+  <div class="code">D3</div>
+  <div>
+    <h2>下肢 B ｜ 后链 · 侧向 · 雪橇 + 抗侧屈核心</h2>
+    <div class="meta">⏱ 75 分钟 ｜ <span class="tag">后链</span><span class="tag">侧向</span><span class="tag">雪橇</span><span class="tag">抗侧屈</span></div>
+  </div>
+</div>
+
+<div class="blk">
+<div class="blkhead"><span>① 热身与激活</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b0i0" data-k="d3b0i0">
+<div class="body">
+<div class="nm">90/90 呼吸</div>
+<div class="ps"><span class="p"><i>B1</i>2×5 呼吸</span><span class="p"><i>B2</i>2×5</span><span class="p"><i>B3</i>2×5</span><span class="p"><i>B4</i>2×5</span></div>
+<div class="cue"><b>慢</b>每天都在第一项，别觉得无聊。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b0i1" data-k="d3b0i1">
+<div class="body">
+<div class="nm">猫牛 + 髋绕环 + 踝背屈</div>
+<div class="ps"><span class="p"><i>B1</i>2×6/2×10</span><span class="p"><i>B2</i>2×6/2×10</span><span class="p"><i>B3</i>2×6/2×10</span><span class="p"><i>B4</i>2×6/2×10</span></div>
+<div class="cue"><b>慢</b>踝背屈不足＝深蹲时腰前倾代偿。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b0i2" data-k="d3b0i2">
+<div class="body">
+<div class="nm">单腿平衡触地（前后左右四点）</div>
+<div class="ps"><span class="p"><i>B1</i>2×6/腿</span><span class="p"><i>B2</i>2×6/腿</span><span class="p"><i>B3</i>2×6/腿</span><span class="p"><i>B4</i>2×6/腿</span></div>
+<div class="cue"><b>控制</b>本体感觉＝术后最该补的一课。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b0i3" data-k="d3b0i3">
+<div class="body">
+<div class="nm">弹力带侧向走 + 蚌式</div>
+<div class="ps"><span class="p"><i>B1</i>2×10步/2×15</span><span class="p"><i>B2</i>2×12步/2×15</span><span class="p"><i>B3</i>2×12步/2×15</span><span class="p"><i>B4</i>2×12步/2×15</span></div>
+<div class="cue"><b>控制</b>臀中肌每天都在名单上。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>② 功率 · 雪橇与侧向</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b1i0" data-k="d3b1i0">
+<div class="body">
+<div class="nm">雪橇推（中-重，短距离）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12m</span><span class="p"><i>B2</i>4×12m</span><span class="p"><i>B3</i>5×12m</span><span class="p"><i>B4</i>4×12m</span></div>
+<div class="cue"><b>持续蹬地</b>躯干前倾 15-20°、背平；这是「零腰椎压缩」的下肢功率王牌。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b1i1" data-k="d3b1i1">
+<div class="body">
+<div class="nm">药球侧抛（侧对墙，轻）</div>
+<div class="ps"><span class="p"><i>B1</i>2-3kg 3×4/侧</span><span class="p"><i>B2</i>3kg 4×4/侧</span><span class="p"><i>B3</i>4kg 4×4/侧</span><span class="p"><i>B4</i>4kg 4×3/侧</span></div>
+<div class="cue"><b>全力</b>侧向蹬地 → 髋送 → 手甩；躯干不塌。</div>
+<div class="alt">替代：无墙：弹力带侧向快速拉 3×6/侧</div>
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>③ 主力量 · 后链与侧向</span><em>22 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b2i0" data-k="d3b2i0">
+<div class="body">
+<div class="nm">单腿腿举（器械、中等幅度）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/腿 RPE6</span><span class="p"><i>B2</i>4×10/腿 RPE7</span><span class="p"><i>B3</i>4×10/腿 RPE8</span><span class="p"><i>B4</i>3×10/腿</span></div>
+<div class="cue"><b>3-1-2</b>背贴紧靠垫、腰不离开；幅度到「臀不卷起」为止。</div>
+<div class="alt">替代：用雪橇/保加利亚蹲替代</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b2i1" data-k="d3b2i1">
+<div class="body">
+<div class="nm">反向箭步蹲（哑铃，双手持）</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/腿</span><span class="p"><i>B2</i>3×8-10/腿</span><span class="p"><i>B3</i>3×8/腿（离心 3s）</span><span class="p"><i>B4</i>3×8/腿</span></div>
+<div class="cue"><b>3-1-2</b>反向比正向对膝和腰都友好；后撤步时躯干保持直立。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b2i2" data-k="d3b2i2">
+<div class="body">
+<div class="nm">Cossack 蹲 / 侧向箭步蹲（轻）</div>
+<div class="ps"><span class="p"><i>B1</i>2×8/侧</span><span class="p"><i>B2</i>3×8/侧</span><span class="p"><i>B3</i>3×8/侧</span><span class="p"><i>B4</i>2×8/侧</span></div>
+<div class="cue"><b>3-1-2</b>内收肌 + 侧向力量＝切入变向的基础；幅度按髋部感觉走。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>④ 辅助 · 髋与小腿</span><em>12 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b3i0" data-k="d3b3i0">
+<div class="body">
+<div class="nm">器械髋外展（坐姿）</div>
+<div class="ps"><span class="p"><i>B1</i>3×15</span><span class="p"><i>B2</i>3×15-20</span><span class="p"><i>B3</i>3×15-20</span><span class="p"><i>B4</i>3×15</span></div>
+<div class="cue"><b>2-1-2</b>躯干靠稳、不要用腰晃；泵感为主。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b3i1" data-k="d3b3i1">
+<div class="body">
+<div class="nm">单腿腿弯举（器械）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/腿</span><span class="p"><i>B2</i>3×12/腿</span><span class="p"><i>B3</i>3×10/腿</span><span class="p"><i>B4</i>3×12/腿</span></div>
+<div class="cue"><b>3-1-2</b>腘绳肌＝腰椎的后方保险。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b3i2" data-k="d3b3i2">
+<div class="body">
+<div class="nm">站姿提踵（负重）</div>
+<div class="ps"><span class="p"><i>B1</i>3×15</span><span class="p"><i>B2</i>3×15</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×15</span></div>
+<div class="cue"><b>2-2-2</b>全幅度，底部拉伸。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b3i3" data-k="d3b3i3">
+<div class="body">
+<div class="nm">俯卧背伸（等长保持）</div>
+<div class="ps"><span class="p"><i>B1</i>2×20s</span><span class="p"><i>B2</i>3×25s</span><span class="p"><i>B3</i>3×25s</span><span class="p"><i>B4</i>2×25s</span></div>
+<div class="cue"><b>等长</b>只到中立位，不做超人式；深层竖脊肌耐力＝腰的续航。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑤ 核心（抗侧屈为主 + 旋转爆发）</span><em>16 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b4i0" data-k="d3b4i0">
+<div class="body">
+<div class="nm">手提箱等长 Hold（单侧）</div>
+<div class="ps"><span class="p"><i>B1</i>3×20s/侧</span><span class="p"><i>B2</i>3×25s/侧</span><span class="p"><i>B3</i>3×25s/侧</span><span class="p"><i>B4</i>3×20s/侧</span></div>
+<div class="cue"><b>等长</b>肩膀水平、肋骨下沉；比走路更能「找到」侧链。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b4i1" data-k="d3b4i1">
+<div class="body">
+<div class="nm">单臂农夫行走</div>
+<div class="ps"><span class="p"><i>B1</i>3×25m/侧</span><span class="p"><i>B2</i>3×25m/侧</span><span class="p"><i>B3</i>3×25m/侧</span><span class="p"><i>B4</i>3×20m/侧</span></div>
+<div class="cue"><b>稳步</b>身体不歪、步幅均匀。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b4i2" data-k="d3b4i2">
+<div class="body">
+<div class="nm">站姿药球旋转抛（轻，快）</div>
+<div class="ps"><span class="p"><i>B1</i>3kg 3×4/侧</span><span class="p"><i>B2</i>4kg 4×3/侧</span><span class="p"><i>B3</i>5kg 4×3/侧</span><span class="p"><i>B4</i>4kg 4×3/侧</span></div>
+<div class="cue"><b>全力速度</b>髋带胸，胸带手；腰椎不主动绕。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b4i3" data-k="d3b4i3">
+<div class="body">
+<div class="nm">死虫（长杠杆）</div>
+<div class="ps"><span class="p"><i>B1</i>3×6/侧</span><span class="p"><i>B2</i>3×8/侧</span><span class="p"><i>B3</i>3×8/侧</span><span class="p"><i>B4</i>3×8/侧</span></div>
+<div class="cue"><b>3-2-3</b>腰贴地，腿伸直但不着地。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑥ 收尾</span><em>6 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d3b5i0" data-k="d3b5i0">
+<div class="body">
+<div class="nm">低强度单车 / 快走（Zone 2）</div>
+<div class="ps"><span class="p"><i>B1</i>8-10 分钟</span><span class="p"><i>B2</i>8-10 分钟</span><span class="p"><i>B3</i>8-10 分钟</span><span class="p"><i>B4</i>8-10 分钟</span></div>
+<div class="cue"><b>能说话</b>不是训练，是「给椎间盘送营养」：低强度循环促进修复。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d3b5i1" data-k="d3b5i1">
+<div class="body">
+<div class="nm">髋 + 胸椎拉伸</div>
+<div class="ps"><span class="p"><i>B1</i>2×30s/侧</span><span class="p"><i>B2</i>2×30s</span><span class="p"><i>B3</i>2×30s</span><span class="p"><i>B4</i>2×30s</span></div>
+<div class="cue"><b>静态</b>收尾固定动作。</div>
+
+</div>
+</label>
+</div>
+</section>
+<section id="d4">
+<div class="daytop">
+  <div class="code">D4</div>
+  <div>
+    <h2>上肢 B ｜ 垂直拉 + 旋转爆发核心</h2>
+    <div class="meta">⏱ 72 分钟 ｜ <span class="tag">垂直拉</span><span class="tag">单侧</span><span class="tag">旋转爆发</span></div>
+  </div>
+</div>
+
+<div class="blk">
+<div class="blkhead"><span>① 热身与激活</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b0i0" data-k="d4b0i0">
+<div class="body">
+<div class="nm">90/90 呼吸</div>
+<div class="ps"><span class="p"><i>B1</i>2×5 呼吸</span><span class="p"><i>B2</i>2×5</span><span class="p"><i>B3</i>2×5</span><span class="p"><i>B4</i>2×5</span></div>
+<div class="cue"><b>慢</b>固定开场。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b0i1" data-k="d4b0i1">
+<div class="body">
+<div class="nm">胸椎 open book（侧卧旋转）</div>
+<div class="ps"><span class="p"><i>B1</i>2×6/侧</span><span class="p"><i>B2</i>2×6/侧</span><span class="p"><i>B3</i>2×6/侧</span><span class="p"><i>B4</i>2×6/侧</span></div>
+<div class="cue"><b>慢</b>这是「腰椎旋转的合法替代」：把旋转还给胸椎。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b0i2" data-k="d4b0i2">
+<div class="body">
+<div class="nm">弹力带外旋 + 肩胛引体激活</div>
+<div class="ps"><span class="p"><i>B1</i>2×12 / 2×8</span><span class="p"><i>B2</i>2×12 / 2×8</span><span class="p"><i>B3</i>2×12 / 2×8</span><span class="p"><i>B4</i>2×12 / 2×8</span></div>
+<div class="cue"><b>控制</b>引体前先让肩胛「下沉」。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>② 上肢功率</span><em>8 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b1i0" data-k="d4b1i0">
+<div class="body">
+<div class="nm">弹力带快速划船 / 药球过顶 slam</div>
+<div class="ps"><span class="p"><i>B1</i>3×8 快速</span><span class="p"><i>B2</i>3×8</span><span class="p"><i>B3</i>4×6</span><span class="p"><i>B4</i>4×6</span></div>
+<div class="cue"><b>爆发</b>向心要快、离心 2s；slam 时躯干不塌、用腹压制动。</div>
+<div class="alt">替代：无药球：绳索快速下拉 3×8</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b1i1" data-k="d4b1i1">
+<div class="body">
+<div class="nm">爆发俯卧撑 / 上斜快速推</div>
+<div class="ps"><span class="p"><i>B1</i>3×6</span><span class="p"><i>B2</i>3×6</span><span class="p"><i>B3</i>3×5</span><span class="p"><i>B4</i>3×5</span></div>
+<div class="cue"><b>快速</b>腰保持一条线。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>③ 主力量 · 垂直拉与单侧推</span><em>22 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b2i0" data-k="d4b2i0">
+<div class="body">
+<div class="nm">引体 / 高位下拉（对握）</div>
+<div class="ps"><span class="p"><i>B1</i>4×8-10</span><span class="p"><i>B2</i>4×8-10 RPE7-8</span><span class="p"><i>B3</i>4×6-8</span><span class="p"><i>B4</i>4×6-8</span></div>
+<div class="cue"><b>3-1-2</b>下拉时不要借腰后仰；背阔发力、胸口先起。</div>
+<div class="alt">替代：器械辅助引体 / 离心引体 4×4</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b2i1" data-k="d4b2i1">
+<div class="body">
+<div class="nm">单臂地雷管推（分腿姿）</div>
+<div class="ps"><span class="p"><i>B1</i>3×8/侧</span><span class="p"><i>B2</i>4×8/侧</span><span class="p"><i>B3</i>4×6/侧</span><span class="p"><i>B4</i>3×6/侧</span></div>
+<div class="cue"><b>2-1-2</b>分腿站＝模拟传球支撑；用腿蹬地起杠，不靠腰挺。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b2i2" data-k="d4b2i2">
+<div class="body">
+<div class="nm">半跪单臂下拉（绳索）</div>
+<div class="ps"><span class="p"><i>B1</i>3×12/侧</span><span class="p"><i>B2</i>3×12/侧</span><span class="p"><i>B3</i>3×10/侧</span><span class="p"><i>B4</i>3×10/侧</span></div>
+<div class="cue"><b>2-1-2</b>半跪姿训练「抗旋转 + 拉」，对四分卫很专项。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>④ 辅助 · 手臂与肩胛</span><em>10 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b3i0" data-k="d4b3i0">
+<div class="body">
+<div class="nm">哑铃弯举 / 绳索弯举</div>
+<div class="ps"><span class="p"><i>B1</i>2×12</span><span class="p"><i>B2</i>3×12</span><span class="p"><i>B3</i>3×10</span><span class="p"><i>B4</i>2×12</span></div>
+<div class="cue"><b>2-1-2</b>肘部固定，别用腰甩。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b3i1" data-k="d4b3i1">
+<div class="body">
+<div class="nm">三头绳索下压</div>
+<div class="ps"><span class="p"><i>B1</i>2×12</span><span class="p"><i>B2</i>3×12</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>2×12</span></div>
+<div class="cue"><b>2-1-2</b>肘在体侧，末端伸直。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b3i2" data-k="d4b3i2">
+<div class="body">
+<div class="nm">前锯肌墙滑 / 俯卧撑加推</div>
+<div class="ps"><span class="p"><i>B1</i>3×12</span><span class="p"><i>B2</i>3×12</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×12</span></div>
+<div class="cue"><b>控制</b>肩胛稳定＝投掷不出手的隐形基础。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b3i3" data-k="d4b3i3">
+<div class="body">
+<div class="nm">Y-raise（小重量）</div>
+<div class="ps"><span class="p"><i>B1</i>3×10</span><span class="p"><i>B2</i>3×12</span><span class="p"><i>B3</i>3×12</span><span class="p"><i>B4</i>3×10</span></div>
+<div class="cue"><b>停 1s</b>下斜方，练「能不能把手臂举稳」。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑤ 核心（旋转爆发 + 抗旋转）</span><em>16 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b4i0" data-k="d4b4i0">
+<div class="body">
+<div class="nm">分腿姿药球旋转抛</div>
+<div class="ps"><span class="p"><i>B1</i>3kg 3×3/侧</span><span class="p"><i>B2</i>4kg 4×3/侧</span><span class="p"><i>B3</i>5kg 5×3/侧</span><span class="p"><i>B4</i>5kg 4×3/侧</span></div>
+<div class="cue"><b>全力速度</b>招牌动作：前腿踩住、后腿蹬转、髋带胸带手。</div>
+<div class="alt">替代：半跪姿旋转抛</div>
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b4i1" data-k="d4b4i1">
+<div class="body">
+<div class="nm">半跪 Pallof Press（动态）</div>
+<div class="ps"><span class="p"><i>B1</i>3×10/侧</span><span class="p"><i>B2</i>3×10/侧</span><span class="p"><i>B3</i>3×8/侧</span><span class="p"><i>B4</i>3×10/侧</span></div>
+<div class="cue"><b>2-1-2</b>推出去慢、收回来更慢。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b4i2" data-k="d4b4i2">
+<div class="body">
+<div class="nm">平板支撑 · 肩拍</div>
+<div class="ps"><span class="p"><i>B1</i>3×16</span><span class="p"><i>B2</i>3×20</span><span class="p"><i>B3</i>3×20</span><span class="p"><i>B4</i>3×16</span></div>
+<div class="cue"><b>控制</b>骨盆不晃，宁可慢。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b4i3" data-k="d4b4i3">
+<div class="body">
+<div class="nm">单腿臀桥</div>
+<div class="ps"><span class="p"><i>B1</i>3×10/侧</span><span class="p"><i>B2</i>3×10/侧</span><span class="p"><i>B3</i>3×10/侧</span><span class="p"><i>B4</i>3×10/侧</span></div>
+<div class="cue"><b>2-1-2</b>收尾把臀「再叫醒一次」。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>⑥ 收尾</span><em>5 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d4b5i0" data-k="d4b5i0">
+<div class="body">
+<div class="nm">绳梯 / 侧向滑步（低强度）</div>
+<div class="ps"><span class="p"><i>B1</i>5 分钟</span><span class="p"><i>B2</i>5 分钟</span><span class="p"><i>B3</i>5 分钟</span><span class="p"><i>B4</i>5 分钟</span></div>
+<div class="cue"><b>轻快</b>脚步敏捷＝四分卫的脚下功夫；不跳跃、不冲刺。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d4b5i1" data-k="d4b5i1">
+<div class="body">
+<div class="nm">肩后侧 + 胸椎拉伸</div>
+<div class="ps"><span class="p"><i>B1</i>2×30s/侧</span><span class="p"><i>B2</i>2×30s</span><span class="p"><i>B3</i>2×30s</span><span class="p"><i>B4</i>2×30s</span></div>
+<div class="cue"><b>静态</b>练完把肩「放回来」。</div>
+
+</div>
+</label>
+</div>
+</section>
+<section id="d5">
+<div class="daytop">
+  <div class="code">D5</div>
+  <div>
+    <h2>甜点日（可选）｜ 药球全谱 + 雪橇 + 弱项 + 有氧</h2>
+    <div class="meta">⏱ 45–55 分钟 ｜ </div>
+  </div>
+</div>
+<p class="note">不累、不酸、不打乱恢复。做完应该比开始更有精神。若本周很累、睡眠差、腰有异样感 → 直接跳过，这一天本来是给你「想练的时候」的。</p>
+<div class="blk">
+<div class="blkhead"><span>A 药球全谱（速度优先）</span><em>15 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d5b0i0" data-k="d5b0i0">
+<div class="body">
+<div class="nm">分腿姿旋转抛</div>
+<div class="ps"><span class="p"><i>B1</i>4×3/侧</span><span class="p"><i>B2</i>4×3/侧</span><span class="p"><i>B3</i>5×3/侧</span><span class="p"><i>B4</i>4×3/侧</span></div>
+<div class="cue"><b>全力</b>今天的目标是「最快」，重量轻一点反而对。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d5b0i1" data-k="d5b0i1">
+<div class="body">
+<div class="nm">胸前推（对墙）</div>
+<div class="ps"><span class="p"><i>B1</i>4×3</span><span class="p"><i>B2</i>4×3</span><span class="p"><i>B3</i>5×3</span><span class="p"><i>B4</i>4×3</span></div>
+<div class="cue"><b>全力</b>接球用髋缓冲，别用腰接。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d5b0i2" data-k="d5b0i2">
+<div class="body">
+<div class="nm">侧抛</div>
+<div class="ps"><span class="p"><i>B1</i>3×4/侧</span><span class="p"><i>B2</i>4×4/侧</span><span class="p"><i>B3</i>4×3/侧</span><span class="p"><i>B4</i>4×3/侧</span></div>
+<div class="cue"><b>全力</b>侧向蹬地。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d5b0i3" data-k="d5b0i3">
+<div class="body">
+<div class="nm">反向过顶抛</div>
+<div class="ps"><span class="p"><i>B1</i>3×3</span><span class="p"><i>B2</i>3×3</span><span class="p"><i>B3</i>4×3</span><span class="p"><i>B4</i>3×3</span></div>
+<div class="cue"><b>全力</b>全身伸展但不塌腰，靠臀和背发力。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>B 雪橇 + 爆发（可选）</span><em>12 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d5b1i0" data-k="d5b1i0">
+<div class="body">
+<div class="nm">雪橇推 / 拉交替</div>
+<div class="ps"><span class="p"><i>B1</i>4×15m</span><span class="p"><i>B2</i>6×15m</span><span class="p"><i>B3</i>6×15m</span><span class="p"><i>B4</i>4×15m</span></div>
+<div class="cue"><b>循环</b>推 + 拉 + 侧向，三个方向都走一遍。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d5b1i1" data-k="d5b1i1">
+<div class="body">
+<div class="nm">低箱跳 / 单腿跳（W9 后）</div>
+<div class="ps"><span class="p"><i>B1</i>—</span><span class="p"><i>B2</i>—</span><span class="p"><i>B3</i>4×3/腿</span><span class="p"><i>B4</i>3×3/腿</span></div>
+<div class="cue"><b>落地轻</b>落地无声、膝软；任何腰部不适立刻删掉。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>C 核心循环</span><em>12 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d5b2i0" data-k="d5b2i0">
+<div class="body">
+<div class="nm">循环 3 轮：死虫 8/侧 → 侧板 20s/侧 → 鸟狗 8/侧 → 手提箱走 20m/侧</div>
+<div class="ps"><span class="p"><i>B1</i>3 轮</span><span class="p"><i>B2</i>3 轮</span><span class="p"><i>B3</i>3 轮</span><span class="p"><i>B4</i>3 轮</span></div>
+<div class="cue"><b>循环</b>组间 60s；质量高于速度。</div>
+
+</div>
+</label>
+</div>
+<div class="blk">
+<div class="blkhead"><span>D 有氧 / 弱项</span><em>15 分钟</em></div>
+<label class="item">
+<input type="checkbox" id="d5b3i0" data-k="d5b3i0">
+<div class="body">
+<div class="nm">Zone 2 有氧（单车/椭圆/快走）</div>
+<div class="ps"><span class="p"><i>B1</i>15 分钟</span><span class="p"><i>B2</i>15-20 分钟</span><span class="p"><i>B3</i>15-20 分钟</span><span class="p"><i>B4</i>15 分钟</span></div>
+<div class="cue"><b>能说话</b>低强度循环是椎间盘最好的「营养液」。</div>
+
+</div>
+</label>
+<label class="item">
+<input type="checkbox" id="d5b3i1" data-k="d5b3i1">
+<div class="body">
+<div class="nm">或：弱项补练</div>
+<div class="ps"><span class="p"><i>B1</i>肩袖/臀中/小腿</span><span class="p"><i>B2</i>同左</span><span class="p"><i>B3</i>同左</span><span class="p"><i>B4</i>同左</span></div>
+<div class="cue"><b>轻</b>二选一：有氧 或 弱项，不要都做。</div>
+
+</div>
+</label>
+</div>
+</section>
+<section id="safety">
+<div class="daytop"><div class="code">!</div><div><h2>安全闸门 · 红线 · 自查</h2><div class="meta">每周看一次，练前 60 秒看一次</div></div></div>
+<div class="blk">
+<div class="blkhead"><span>三级决策树（决定这周加不加量）</span></div>
+<div class="srow"><div class="sa">训练中 NRS 0-2，且 24-48h 回到基线</div><div class="sb">✅ 继续按计划，正常加负荷</div></div><div class="srow"><div class="sa">训练中 NRS 3，24h 后回到基线</div><div class="sb">⚠️ 保持重量不变，本周只加次数，不加重量</div></div><div class="srow"><div class="sa">训练中 NRS 3 且次日仍有感觉</div><div class="sb">⚠️ 该动作减 1 组、减 20% 重量，缩小幅度，观察一周</div></div><div class="srow"><div class="sa">训练中 NRS ≥4 或出现腿部放射症状</div><div class="sb">🛑 停该动作 48h，改 90/90 呼吸 + 鸟狗 + 步行；复评后从退阶开始</div></div><div class="srow"><div class="sa">出现红线清单任一</div><div class="sb">🚨 停止训练并就医</div></div>
+</div>
+<div class="blk">
+<div class="blkhead"><span>红线清单 · 出现即停</span></div>
+<div class="srow"><div class="sa red">腿部（尤其小腿/足底）新出现麻木、针刺、放射痛</div><div class="sb">立即停止当天训练，48 小时内不练下肢；观察 24-48h，不缓解→联系手术医生</div></div><div class="srow"><div class="sa red">鞍区（会阴/肛周）麻木、大小便功能改变</div><div class="sb">急诊级信号，立刻就医，不要等</div></div><div class="srow"><div class="sa red">突发单侧腿无力、足下垂、走路拖地</div><div class="sb">急诊级信号，立刻就医</div></div><div class="srow"><div class="sa red">夜间静息痛明显加重，或咳/打喷嚏引发腿痛</div><div class="sb">本周停止负重核心，改呼吸+步行；联系医生</div></div><div class="srow"><div class="sa red">训练后疼痛 NRS ≥4，或持续超过 48 小时</div><div class="sb">降一档：下次该动作减 1 组、减 20% 重量或缩小幅度，并记录</div></div><div class="srow"><div class="sa red">某动作中「腰在动 / 腰在晃」的感觉</div><div class="sb">当场停，改退阶；这比疼痛更早预警</div></div>
+</div>
+<div class="blk">
+<div class="blkhead"><span>永久排除的动作</span></div>
+<div class="srow"><div class="sa">× 仰卧起坐 / 卷腹 / 器械卷腹</div><div class="sb">反复屈曲＝椎间盘后侧压力最高的动作，术后永久排除</div></div><div class="srow"><div class="sa">× 俄罗斯转体 / 负重躯干绕转</div><div class="sb">屈曲 + 旋转的复合剪切，这是最危险的组合</div></div><div class="srow"><div class="sa">× 负重侧屈（手持哑铃侧弯）</div><div class="sb">把侧屈当训练，等于主动给节段加压</div></div><div class="srow"><div class="sa">× 仰卧举腿 / 悬垂举腿</div><div class="sb">骨盆后倾 + 大量屈髋，腰椎屈曲负荷大</div></div><div class="srow"><div class="sa">× 早安式 / 直腿硬拉</div><div class="sb">大剪切力 + 屈曲，术后禁区</div></div><div class="srow"><div class="sa">× 大重量背蹲 / 史密斯深蹲 / 双腿极限腿举</div><div class="sb">高轴向压缩；用单腿与器械替代</div></div><div class="srow"><div class="sa">× 超人式 / 俯卧背伸超伸（幅度过大）</div><div class="sb">末端伸展增加后侧压力；只做中立位等长</div></div><div class="srow"><div class="sa">× 连续大量 burpee / 跳深</div><div class="sb">疲劳后动作失控，落地塌腰风险高</div></div><div class="srow"><div class="sa">× 大幅度的绳索/杠铃「砍伐」绕转</div><div class="sb">把旋转交给腰椎；改为低到高慢速 chop 与 Pallof</div></div><div class="srow"><div class="sa">× 力竭训练（RIR 0）</div><div class="sb">动作一变形的第一受害者就是腰椎</div></div>
+</div>
+<div class="blk">
+<div class="blkhead"><span>开练前 60 秒自查</span></div>
+<div class="srow"><div class="sb">① 今天腰的感觉（NRS 0-10）比上周一高还是低？<br>② 有没有新的腿部症状（麻 / 刺 / 放射 / 无力）？<br>③ 昨晚睡够 6.5 小时了吗？不够 → 主项 -1 组、RPE -1。<br>④ 90/90 呼吸能不能 360° 撑开肋骨？不能 → 先做 5 分钟猫牛 + 呼吸。</div></div>
+</div>
+</section>
+<section id="test">
+<div class="daytop"><div class="code">T</div><div><h2>测试电池 · 分期</h2><div class="meta">W1 / W8 / W16 各测一次</div></div></div>
+<div class="blk">
+<div class="blkhead"><span>测试项目</span></div>
+<div class="srow"><div class="sa">单腿闭眼站立（秒）</div><div class="sb"><b>平衡与本体感觉</b><br>左右各 3 次取最好</div></div><div class="srow"><div class="sa">侧板支撑保持（秒/侧）</div><div class="sb"><b>抗侧屈耐力</b><br>身体一条线，塌了就停表</div></div><div class="srow"><div class="sa">手提箱行走（最重 × 30m 成功）</div><div class="sb"><b>负重核心 + 单侧稳定</b><br>记重量，不记疼</div></div><div class="srow"><div class="sa">半跪 Pallof 等长（最长时间/侧）</div><div class="sb"><b>抗旋转等长能力</b><br>同一阻力片对比</div></div><div class="srow"><div class="sa">保加利亚分腿蹲（5RM/腿）</div><div class="sb"><b>单腿最大力量</b><br>用 5RM 估算 1RM = 重量 × 1.13</div></div><div class="srow"><div class="sa">单腿 RDL（8RM）</div><div class="sb"><b>后链力量与髋铰链控制</b><br>左右分开记</div></div><div class="srow"><div class="sa">分腿姿药球旋转抛（距离 m，3 次最好）</div><div class="sb"><b>旋转爆发力（核心功率）</b><br>固定重量 4kg，测距离</div></div><div class="srow"><div class="sa">坐姿药球胸前抛（距离 m）</div><div class="sb"><b>上肢功率链</b><br>固定重量 4kg</div></div><div class="srow"><div class="sa">晨僵时长 / 异样感 NRS / 日常功能自评</div><div class="sb"><b>主观与功能</b><br>每周一早上填一次</div></div>
+</div>
+<div class="blk">
+<div class="blkhead"><span>十六周分期（到点就换一档看）</span></div>
+<div class="srow"><div class="sa">B1 · W1–W4 · 基石期 · 稳定与技术</div><div class="sb">把「中立位 + 腹内压 + 髋铰链」变成条件反射；单腿动作定型；药球只练技术不上强度。<br><b style="color:var(--am)">RPE 6-7 ｜ 留 3 次余力 ｜ 每动作 3 组打底 ｜ 每周只加次数不加重量</b><br>W4 降量：组数 -1，RPE -1（大约 60% 容量）</div></div><div class="srow"><div class="sa">B2 · W5–W8 · 力量期 · 单腿与肌肥大</div><div class="sb">单腿力量上台阶（保加利亚蹲每腿可负重接近体重 35-45%），上肢推拉建立 12-16 组/周容量。<br><b style="color:var(--am)">RPE 7-8 ｜ 主项 8-10 次 ｜ 每 2 周 +2.5kg 或 +1 组 ｜ 核心动作改为负重版</b><br>W8 降量：组数减半，RPE 6-7</div></div><div class="srow"><div class="sa">B3 · W9–W12 · 爆发期 · 力速转化</div><div class="sb">把 B2 攒的力量转成速度：药球旋转抛达到峰值速度，加入低量超等长（跳箱/单腿跳）。<br><b style="color:var(--am)">主项 6-8 次 RPE 8 ｜ 爆发动作 3-5 次全力速度 ｜ 组间 90-120s ｜ 速度下降即停</b><br>W12 降量：只练技术日 + 一次力量维持</div></div><div class="srow"><div class="sa">B4 · W13–W16 · 峰值与巩固</div><div class="sb">力量维持（容量降 30%）+ 爆发力冲到最高 + 完成第二次测试，把成果锁进身体。<br><b style="color:var(--am)">RPE 7-8 ｜ 组数下降、强度维持 ｜ W16 减量并复测</b><br>W16 减量测试周（容量 50%）</div></div>
+</div>
+</section>
+</main>
+
+<footer>
+<b>打勾</b>：点整行即可（原生复选框，不依赖脚本）。<br>
+<b>计时器</b>：右下角「⏱」只在脚本可用的环境出现；如果这里没有那个按钮（例如 iOS「文件」预览禁用了脚本），用系统「时钟 → 计时器」代替，或者把本文件放到 Safari / 主屏幕打开。<br>
+<b>参数写法</b>：4×8/腿 = 4 组 × 每腿 8 次；RPE 7-8 = 留 1-2 次余力；节奏 3-1-2 = 下放 3 秒·底停 1 秒·举起 2 秒。<br>
+<b>免责</b>：不构成医疗建议。出现腿部麻木 / 放射痛 / 无力 / 鞍区症状 → 停练就医。
+</footer>
+
+<div id="prog"><span>今日</span><div class="track"><div class="fill" id="fill"></div></div><span id="pnum">0/0</span></div>
+<button id="topen">⏱ 计时</button>
+<div id="timer">
+  <div id="tt">--:--</div>
+  <div class="tbtns">
+    <button data-s="45">45s</button>
+    <button data-s="60">60s</button>
+    <button data-s="90">90s</button>
+    <button data-s="120">120s</button>
+    <button data-s="180">180s</button>
+    <button id="treset">清空打勾</button>
+    <button class="pri" id="tclose">关闭</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var body = document.body;
+  try { body.classList.add('js'); } catch(e){}
+  var KEY = 'qb-card-v2', store = {};
+  try { store = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e){ store = {}; }
+  var boxes = [].slice.call(document.querySelectorAll('.item input[data-k]'));
+
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
+  function progress(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var f = document.getElementById('fill'), n = document.getElementById('pnum');
+    if (f) f.style.width = boxes.length ? (done / boxes.length * 100) + '%' : '0%';
+    if (n) n.textContent = done + '/' + boxes.length;
+  }
+  boxes.forEach(function(b){
+    if (store[b.dataset.k]) b.checked = true;
+    b.addEventListener('change', function(){
+      if (b.checked) store[b.dataset.k] = 1; else delete store[b.dataset.k];
+      save(); progress();
+    });
+  });
+  progress();
+
+  /* 高亮当前正在看的训练日 */
+  var links = [].slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  function hl(){
+    var y = window.scrollY + 90, best = links[0];
+    links.forEach(function(a){
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el && el.offsetTop <= y) best = a;
+    });
+    links.forEach(function(a){ a.classList.toggle('on', a === best); });
+  }
+  window.addEventListener('scroll', hl, { passive: true });
+  hl();
+
+  /* 计时器 */
+  var timer = document.getElementById('timer'), tt = document.getElementById('tt');
+  var left = 0, tid = null, ac = null;
+  if (timer && tt) {
+    timer.classList.add('ready');
+    function fmt(s){ var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+    function beep(){
+      try {
+        ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+        [0, .28, .56].forEach(function(d){
+          var o = ac.createOscillator(), g = ac.createGain();
+          o.type = 'sine'; o.frequency.value = 880; o.connect(g); g.connect(ac.destination);
+          var t0 = ac.currentTime + d;
+          g.gain.setValueAtTime(.0001, t0);
+          g.gain.exponentialRampToValueAtTime(.35, t0 + .02);
+          g.gain.exponentialRampToValueAtTime(.0001, t0 + .22);
+          o.start(t0); o.stop(t0 + .24);
+        });
+      } catch(e){}
+      if (navigator.vibrate) navigator.vibrate([120, 80, 120, 80, 200]);
+    }
+    function tick(){
+      left--;
+      if (left <= 0){ clearInterval(tid); tid = null; tt.textContent = 'GO'; tt.className = 'done'; beep(); return; }
+      tt.textContent = fmt(left);
+      tt.className = left <= 10 ? 'warn' : '';
+    }
+    [].forEach.call(timer.querySelectorAll('button[data-s]'), function(b){
+      b.addEventListener('click', function(){
+        if (tid) clearInterval(tid);
+        left = parseInt(b.dataset.s, 10);
+        tt.textContent = fmt(left); tt.className = '';
+        tid = setInterval(tick, 1000);
+      });
+    });
+    document.getElementById('topen').addEventListener('click', function(){ timer.classList.add('open'); });
+    document.getElementById('tclose').addEventListener('click', function(){
+      timer.classList.remove('open');
+      if (tid){ clearInterval(tid); tid = null; }
+      tt.textContent = '--:--'; tt.className = '';
+    });
+    document.getElementById('treset').addEventListener('click', function(){
+      if (!confirm('清空所有打勾？')) return;
+      boxes.forEach(function(b){ b.checked = false; });
+      store = {}; save(); progress();
+    });
+  }
+})();
+</script>
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22QB%20%E8%AE%AD%E7%BB%83%E5%8D%A1%22%2C%22short_name%22%3A%22QB%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230e1116%22%2C%22theme_color%22%3A%22%230e1116%22%7D">
+<script>
+if ('serviceWorker' in navigator) {
+  addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').then(function(){
+      document.documentElement.setAttribute('data-offline', '1');
+    }).catch(function(){});
+  });
+}
+</script>
+</body></html>
